@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.game.webservice.Dao.UserMapper">
+    <select id="getAll" resultType="com.game.webservice.Dao.User">
+        select * from admin;
+    </select>
+
+    <select id="findInfo" resultType="com.game.webservice.Dao.User">
+        select * from admin where usrname=#{name};
+    </select>
+    <select id="getUsers" resultType="com.game.webservice.Dao.User">
+        select * from admin limit #{start},#{length}
+    </select>
+    <select id="findUsers" resultType="com.game.webservice.Dao.User">
+        select * from admin where usrname like #{name};
+    </select>
+    <select id="CheckAdmin" resultType="com.game.webservice.Dao.User">
+        select * from admin where usrname=#{name} and password=#{pwd};
+    </select>
+    <insert id="addAdmin">
+        insert into admin (usrname,password,province,job,phone,email,sum) values(#{usrname},#{password},#{province},#{job},#{phone},#{email},#{sum});
+    </insert>
+
+</mapper>
