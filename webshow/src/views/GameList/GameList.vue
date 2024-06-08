@@ -1,6 +1,6 @@
 <template>
     
-    <CardItem > 对战列表</CardItem>
+    <CardItem >对战列表</CardItem>
     
     
 </template>

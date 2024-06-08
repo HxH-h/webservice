@@ -3,7 +3,8 @@
                       justify-content: center;
                       ">
     <el-card style="width: 70vw;">
-      <template #header><slot></slot></template>
+      <template #header><slot ></slot></template>
+      
     </el-card>
   </el-container>
 </template>
