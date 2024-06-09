@@ -1,3 +1,3 @@
 <template>
-    404 Not Found
+    <h1 style="text-align: center;">Not Found</h1> 
 </template>

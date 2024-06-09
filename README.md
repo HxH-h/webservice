@@ -1,0 +1,1 @@
+A game observation platform that supports single player and multiplayer online gaming

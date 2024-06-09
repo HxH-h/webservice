@@ -2,18 +2,15 @@
   <el-container style="align-items: center;
                       justify-content: center;
                       ">
-    <el-card style="width: 70vw;">
-      <template #header><slot ></slot></template>
-      
+    <el-card style="width: 80vw; height: 100vh;">
+      <template #header><slot name="head"></slot></template>
+      <slot name="body"></slot>
     </el-card>
   </el-container>
 </template>
 <style>
 .el-card{
-  
   text-align: center;
-
-
 }
 
 

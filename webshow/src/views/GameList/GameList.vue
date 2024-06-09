@@ -1,6 +1,8 @@
 <template>
     
-    <CardItem >对战列表</CardItem>
+    <CardItem >
+    <template #head> 对战列表</template>   
+    </CardItem>
     
     
 </template>

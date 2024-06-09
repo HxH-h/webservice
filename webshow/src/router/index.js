@@ -6,6 +6,10 @@ import RankList from '../views/RankList/RankList.vue'
 import NotFound from '../views/NotFound.vue'
 const routes = [
   {
+    path:'/',
+    redirect: '/GamePK'
+  },
+  {
     path:'/GameList',
     name: 'GameList',
     component: GameList
