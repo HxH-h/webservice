@@ -26,22 +26,13 @@ export default{
         var rect= null;
         var Chesses=null;
         function ClickHandle (e){
-            // var x = e.clientX;
-            // var y = e.clientY;
-            // var rect = canvas.value.getBoundingClientRect();
-            // x -= rect.left;
-            // y -= rect.top;
-            // console.log(x, y);
-            // const ctx = canvas.value.getContext('2d');
-            // drawChess(ctx,x,y)
+            Chesses.setChess(1);
         }
         
         
         function MoveHandle (e){
             var x = e.clientX;
             var y = e.clientY;
-            //var rect = canvas.value.getBoundingClientRect();
-            //const ctx = canvas.value.getContext('2d');
             x -= rect.left;
             y -= rect.top;
             x=(x-margin)/gridSize
@@ -75,7 +66,7 @@ export default{
             const ctx = canvas.value.getContext('2d');
             rect = canvas.value.getBoundingClientRect();
             new ChessBoard(ctx,canvasSize,size,margin,gridSize)
-            Chesses=new Chess(ctx,margin,gridSize,rect)
+            Chesses=new Chess(ctx,margin,gridSize)
             window.addEventListener('mousemove',MoveHandle);
         });
         

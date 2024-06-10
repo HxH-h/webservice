@@ -1,13 +1,14 @@
 import {Game_Obj} from './Game_Obj.js'
 export class Chess extends Game_Obj{
-    constructor(ctx,margin,gridSize,rect){
+    constructor(ctx,margin,gridSize){
         super()
         this.ctx=ctx
-        this.rect=rect
         this.margin=margin
         this.gridSize=gridSize
         this.lastX=0
         this.lastY=0
+        this.curX=0
+        this.curY=0
         this.chessAry=[
             [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -57,6 +58,12 @@ export class Chess extends Game_Obj{
           
         }
     }
+    setChess(role){
+        if(role<1||role>2){
+            return
+        }
+        this.chessAry[this.curY][this.curX]=role
+    }
     drawChess(x,y,color){
         this.ctx.beginPath();//开始绘制
         this.ctx.arc(x,y,6,0,2*Math.PI);//arc 的意思是“弧”
@@ -69,8 +76,13 @@ export class Chess extends Game_Obj{
         if(x<0||y<0||x>18||y>18){
             return ;
         }
+        
         if(this.chessAry[y][x]===0&&(x!=this.lastX||y!=this.lastY)){
-            this.chessAry[this.lastY][this.lastX]=0
+            if(this.chessAry[this.lastY][this.lastX]===3){
+                this.chessAry[this.lastY][this.lastX]=0
+            }
+            this.curX=x
+            this.curY=y
             this.chessAry[y][x]=3
             this.lastX=x
             this.lastY=y
@@ -78,7 +90,7 @@ export class Chess extends Game_Obj{
     }
     drawChessPossible(x,y){
         this.ctx.beginPath();//开始绘制
-        this.ctx.arc(x,y,5,0,2*Math.PI);//arc 的意思是“弧”
+        this.ctx.arc(x,y,5,0,2*Math.PI);
         this.ctx.strokeStyle="white";
         this.ctx.stroke()
     }
