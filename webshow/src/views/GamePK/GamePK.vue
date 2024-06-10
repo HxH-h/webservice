@@ -18,18 +18,22 @@ export default{
         CardItem,
     },
     setup (){
+        //棋盘参数
         const canvasSize = 600;
         const size = 19;
         const margin = 30;
         const gridSize = (canvasSize - 2 * margin) / (size - 1);
         const canvas = ref(null);
+        //获取棋盘原点
         var rect= null;
+        //获取棋子对象
         var Chesses=null;
         function ClickHandle (e){
+            //下棋
             Chesses.setChess(1);
         }
         
-        
+        //检测鼠标移动，并选择四角中的一角
         function MoveHandle (e){
             var x = e.clientX;
             var y = e.clientY;
@@ -65,6 +69,7 @@ export default{
         onMounted(() => {
             const ctx = canvas.value.getContext('2d');
             rect = canvas.value.getBoundingClientRect();
+            //棋盘
             new ChessBoard(ctx,canvasSize,size,margin,gridSize)
             Chesses=new Chess(ctx,margin,gridSize)
             window.addEventListener('mousemove',MoveHandle);

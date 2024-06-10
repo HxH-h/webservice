@@ -35,6 +35,7 @@ export class Chess extends Game_Obj{
         this.render()
 
     }
+    //渲染
     render(){
         let x=0;
         let y=0;
@@ -58,6 +59,7 @@ export class Chess extends Game_Obj{
           
         }
     }
+    //获取当前位置并落子
     setChess(role){
         if(role<1||role>2){
             return
@@ -76,11 +78,13 @@ export class Chess extends Game_Obj{
         if(x<0||y<0||x>18||y>18){
             return ;
         }
-        
+        //该位置没有子则推荐
         if(this.chessAry[y][x]===0&&(x!=this.lastX||y!=this.lastY)){
+            //若在推荐位置落子则不撤销
             if(this.chessAry[this.lastY][this.lastX]===3){
                 this.chessAry[this.lastY][this.lastX]=0
             }
+            //更新当前位置
             this.curX=x
             this.curY=y
             this.chessAry[y][x]=3
