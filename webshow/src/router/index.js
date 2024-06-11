@@ -4,6 +4,7 @@ import GamePK from '../views/GamePK/GamePK.vue'
 import GamerInfo from '../views/GamerInfo/GamerInfo.vue'
 import RankList from '../views/RankList/RankList.vue'
 import NotFound from '../views/NotFound.vue'
+import LoginPage from '../views/Login/login.vue'
 const routes = [
   {
     path:'/',
@@ -28,6 +29,11 @@ const routes = [
     path:'/RankList',
     name: 'RankList',
     component: RankList
+  },
+  {
+    path: '/login',
+    name:'login',
+    component:LoginPage
   },
   {
     path: '/404',
