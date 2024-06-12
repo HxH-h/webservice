@@ -6,7 +6,6 @@
     <select id="getAll" resultType="com.game.webservice.Dao.User">
         select * from admin;
     </select>
-
     <select id="findInfo" resultType="com.game.webservice.Dao.User">
         select * from admin where usrname=#{name};
     </select>
