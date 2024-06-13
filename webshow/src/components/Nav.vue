@@ -32,7 +32,7 @@
   const activeIndex = ref('1')
   
   const username=ref('hxh');
-    
+
   </script>
   <style scoped>
   .flex-grow{

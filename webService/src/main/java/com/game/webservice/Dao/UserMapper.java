@@ -9,6 +9,7 @@ import java.util.List;
 public interface UserMapper {
     //查询用户名是否重复
     User findInfo(@Param("name") String name);
+    User findById(@Param("ID") String ID);
     List<User> getAll();
     //验证用户
     User CheckAdmin(@Param("name") String name, @Param("pwd") String pwd);

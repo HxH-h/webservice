@@ -27,13 +27,13 @@ export default {
         function submit() {
             axios({
                 method: "get",
-                url: "http://localhost:8080/user/" + admin.username + "/" + admin.password,
-                data: JSON.stringify(data),
+                url: "http://localhost:8080/login",
+                data: JSON.stringify(admin),
                 headers: {
                     "Content-Type": "application/json"
                 }
             }).then(function (resp) {
-                
+                console.log(resp.data)
             })
         }
         return {

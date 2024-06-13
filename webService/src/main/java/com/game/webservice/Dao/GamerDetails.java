@@ -16,7 +16,9 @@ public class GamerDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
-
+    public User getUser(){
+        return this.user;
+    }
     @Override
     public String getPassword() {
         return user.getPassword();
