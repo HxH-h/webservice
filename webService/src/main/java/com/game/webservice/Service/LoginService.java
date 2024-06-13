@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -26,6 +27,18 @@ public class LoginService {
         Map<String, String> map = new HashMap<>();
         map.put("mes","success");
         map.put("token",jwt);
+        return map;
+    }
+    public Map<String,String> getInfo(){
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        GamerDetails principal =(GamerDetails) usernamePasswordAuthenticationToken.getPrincipal();
+        User user= principal.getUser();
+        Map<String, String> map = new HashMap<>();
+        map.put("mes","success");
+        map.put("id",Integer.toString(user.getId()));
+        map.put("username",user.getUsername());
+        map.put("password",user.getPassword());
         return map;
     }
 

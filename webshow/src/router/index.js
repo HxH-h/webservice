@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
   const store = useStore()
   //如果路由需要跳转
   if (to.meta.isAuth) {
-      if (store.state.username !=' ') {
+      if (store.state.isLogin) {
           next()  //放行
       } else {
           alert('抱歉，您无权限查看！')

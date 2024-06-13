@@ -8,33 +8,27 @@
             <el-input v-model="admin.password" class="password" placeholder="密码" /><br>
             <el-button @click="submit">提交</el-button>
         </template>
+       
     </CardItem>
 
 </template>
 <script>
-import axios from 'axios';
+import { useStore } from "vuex"
 import CardItem from '@/components/CardItem.vue';
 import { ref } from 'vue'
-let admin = ref({
-    username: '',
-    password: ''
-})
 export default {
     components: {
         CardItem,
     },
     setup() {
+        let admin = ref({
+            username: '',
+            password: ''
+        })
+        const store = useStore()
         function submit() {
-            axios({
-                method: "get",
-                url: "http://localhost:8080/login",
-                data: JSON.stringify(admin),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(function (resp) {
-                console.log(resp.data)
-            })
+            store.dispatch("getToken",admin.value)
+            
         }
         return {
             admin,

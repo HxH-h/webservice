@@ -19,20 +19,22 @@
       <el-menu-item index="2" style="margin-left: 3svw"><router-link to="/RankList">排行榜</router-link></el-menu-item>
       
       <div class="flex-grow" />
-      <el-sub-menu index="3">
+      <el-sub-menu index="3" v-if="flag">
         <template #title>{{ username }}</template>
         <el-menu-item index="2-1"><router-link to="/GamerInfo">个人信息</router-link></el-menu-item>
         <el-menu-item index="2-2">item two</el-menu-item>
         <el-menu-item index="2-3">item three</el-menu-item>
       </el-sub-menu>
+      <el-menu-item index="3" v-else><router-link to="/Login">登录</router-link></el-menu-item>
     </el-menu>
   </template>
   <script setup>
-  import {ref} from 'vue'
+  import {ref,onMounted, reactive} from 'vue'
+  import { useStore } from "vuex"
   const activeIndex = ref('1')
-  
-  const username=ref('hxh');
-
+  const store = useStore()
+  const username=ref(store.username);
+  const flag=reactive(store.isLogin)
   </script>
   <style scoped>
   .flex-grow{

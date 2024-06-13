@@ -1,5 +1,6 @@
 package com.game.webservice.Controller;
 
+import com.game.webservice.Dao.User;
 import com.game.webservice.Service.LoginService;
 import com.game.webservice.Service.Serve;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,14 @@ public class UserController {
         System.out.println(ser.findInfo(username).toString());
         return ser.findInfo(username).toString();
     }
-    @GetMapping("/token/{username}/{password}")
-    public Map<String,String> getToken(@PathVariable String username,@PathVariable String password){
-        System.out.println(username+password);
-        return loginService.getToken(username,password);
+    @PostMapping ("/token")
+    public Map<String,String> getToken(@RequestBody User user){
+        System.out.println(user.getUsername()+user.getPassword());
+        return loginService.getToken(user.getUsername(),user.getPassword());
+    }
+    @GetMapping("/info/")
+    public Map<String,String> getInfo(){
+        return loginService.getInfo();
     }
 
 
