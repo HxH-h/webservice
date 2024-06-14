@@ -1,11 +1,12 @@
 package com.game.webservice.Controller;
 
 import com.game.webservice.Dao.User;
+import com.game.webservice.Service.GameService;
 import com.game.webservice.Service.LoginService;
 import com.game.webservice.Service.Serve;
+import com.game.webservice.Service.Utils.ArraySerializationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 
 @RestController
@@ -15,9 +16,11 @@ public class UserController {
     Serve ser;
     @Autowired
     LoginService loginService;
+    @Autowired
+    GameService gameService;
     @GetMapping("/{username}")
     public String test(@PathVariable String username){
-        System.out.println(ser.findInfo(username).toString());
+        System.out.println(gameService.selectChess(1));
         return ser.findInfo(username).toString();
     }
     @PostMapping ("/token")

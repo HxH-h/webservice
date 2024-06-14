@@ -23,4 +23,8 @@ public interface UserMapper {
                   @Param("sum") String sum);
     List<User> getUsers(@Param("start") int start,@Param("length") int length);
     List<User> findUsers(@Param("name") String name);
+    void SaveChessHistory(@Param("id") Integer id,
+                          @Param("time") String datetime,
+                          @Param("chess") String chess);
+    ChessHistory selectChess(@Param("id") Integer id);
 }

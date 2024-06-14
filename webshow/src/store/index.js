@@ -3,11 +3,11 @@ import axios from 'axios';
 import route from '../router/index'
 const store = new Vuex.Store({
   state: {
-    id: '',
-    username: ' ',
+    id: '1',
+    username: 'hxh',
     password: ' ',
     token: ' ',
-    isLogin: false
+    isLogin: true
   },
 
   getters: {

@@ -24,5 +24,11 @@
     <insert id="addAdmin">
         insert into admin (usrname,password,province,job,phone,email,sum) values(#{usrname},#{password},#{province},#{job},#{phone},#{email},#{sum});
     </insert>
+    <select id="selectChess">
+        select * from ghischess where id=#{id}
+    </select>
+    <insert id="SaveChessHistory">
+        insert into ghischess values (#{id},#{time},#{chess})
+    </insert>
 
 </mapper>
