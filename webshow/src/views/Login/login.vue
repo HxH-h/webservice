@@ -28,7 +28,6 @@ export default {
         const store = useStore()
         function submit() {
             store.dispatch("getToken",admin.value)
-            
         }
         return {
             admin,

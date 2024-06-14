@@ -60,13 +60,20 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = useStore()
+  const jwt_token=localStorage.getItem("jwt_token")
+  
   //如果路由需要跳转
   if (to.meta.isAuth) {
       if (store.state.isLogin) {
           next()  //放行
       } else {
+        if(jwt_token){
+          store.commit("setToken",jwt_token)
+          store.dispatch("getInfo")
+        }else{
           alert('抱歉，您无权限查看！')
           next('/login')
+        }
       }
   } else {
       // 否则，放行

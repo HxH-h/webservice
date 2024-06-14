@@ -14,27 +14,44 @@
         />
       </el-menu-item> -->
      
-      <el-menu-item index="0" style="margin-left: 20vw "><router-link to="/GamePK" >对战模式</router-link></el-menu-item>
-      <el-menu-item index="1" style="margin-left: 3svw"><router-link to="/GameList">对战列表</router-link></el-menu-item>
-      <el-menu-item index="2" style="margin-left: 3svw"><router-link to="/RankList">排行榜</router-link></el-menu-item>
+      <el-menu-item index="0" style="margin-left: 20vw " @click="jumpPage('GamePK')">对战模式</el-menu-item>
+      <el-menu-item index="1" style="margin-left: 3svw" @click="jumpPage('GameList')">对战列表</el-menu-item>
+      <el-menu-item index="2" style="margin-left: 3svw" @click="jumpPage('RankList')">排行榜</el-menu-item>
       
       <div class="flex-grow" />
-      <el-sub-menu index="3" v-if="flag">
-        <template #title>{{ username }}</template>
-        <el-menu-item index="2-1"><router-link to="/GamerInfo">个人信息</router-link></el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
+      <el-sub-menu index="3" v-if="this.store.state.isLogin">
+        <template #title>{{ this.store.state.username }}</template>
+        <el-menu-item index="2-1" @click="jumpPage('GamerInfo')">个人信息</el-menu-item>
+        <el-menu-item index="2-2" @click="logout">登出</el-menu-item>
+        <el-menu-item index="2-3" >item three</el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="3" v-else><router-link to="/Login">登录</router-link></el-menu-item>
+      <el-menu-item index="3" @click="jumpPage('login')" v-else>登录</el-menu-item>
     </el-menu>
   </template>
-  <script setup>
+  <script>
   import {ref,onMounted, reactive} from 'vue'
   import { useStore } from "vuex"
-  const activeIndex = ref('1')
-  const store = useStore()
-  const username=ref(store.username);
-  const flag=reactive(store.isLogin)
+  import route from '../router/index'
+  export default{
+      setup(){
+        const activeIndex = ref('1')
+        const store = useStore()
+        function logout(){
+          store.dispatch("removeToken")
+        }
+        function jumpPage(page){
+          route.push({ name: page })
+        }
+        return{
+            activeIndex,
+            store,
+            logout,
+            jumpPage
+        }
+      }
+  }
+  
+  
   </script>
   <style scoped>
   .flex-grow{
@@ -45,9 +62,5 @@
   text-decoration: none;
 }
 
-.router-link-active, .a{
-  border-bottom: none;
-  text-decoration: none;
-}
   </style>
   
