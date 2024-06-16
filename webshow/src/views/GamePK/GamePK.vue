@@ -9,10 +9,11 @@
 
 
 <script >
-import {ref, onMounted } from 'vue';
+import {ref, onMounted ,onUnmounted} from 'vue';
 import CardItem from '@/components/CardItem.vue'
 import {ChessBoard} from '@/componetjs/ChessBoard.js'
 import {Chess} from '@/componetjs/Chess.js'
+import { useStore } from "vuex"
 export default{
     components:{
         CardItem,
@@ -65,7 +66,8 @@ export default{
             }
             Chesses.ChessPossible(x,y)   
         }
-
+        const store=useStore()
+        let socket=null
         onMounted(() => {
             const ctx = canvas.value.getContext('2d');
             rect = canvas.value.getBoundingClientRect();
@@ -73,7 +75,20 @@ export default{
             new ChessBoard(ctx,canvasSize,size,margin,gridSize)
             Chesses=new Chess(ctx,margin,gridSize)
             window.addEventListener('mousemove',MoveHandle);
+
+            socket=new WebSocket(store.state.wssocket.socket)
+            socket.onopen=()=>{
+                console.log("connected")
+            }
+            socket.onclose=()=>{
+                console.log("disconnected")
+            }
+
+
         });
+        onUnmounted(()=>{
+            socket.close()
+        })
         
         return{
             canvas,

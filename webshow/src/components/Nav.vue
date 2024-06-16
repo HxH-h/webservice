@@ -1,6 +1,6 @@
 <template>
     <el-menu
-      :default-active="activeIndex"
+      :default-active="route.currentRoute.name"
       class="el-menu-demo"
       mode="horizontal"
       :ellipsis="false"
@@ -45,6 +45,7 @@
         return{
             activeIndex,
             store,
+            route,
             logout,
             jumpPage
         }

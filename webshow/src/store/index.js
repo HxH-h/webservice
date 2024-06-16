@@ -1,12 +1,13 @@
 import Vuex from 'vuex'
 import axios from 'axios';
 import route from '../router/index'
+import  WsSocket from './WsSocket.js'
 const store = new Vuex.Store({
   state: {
-    id: '1',
-    username: 'hxh',
+    id: '',
+    username: '',
     password: ' ',
-    token: ' ',
+    token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3OWU5MjFkZjcxNmM0NzdkOGFhOTVmNDcxNjhlNjU2YSIsInN1YiI6IjIiLCJpc3MiOiJzZyIsImlhdCI6MTcxODUxOTM5NSwiZXhwIjoxNzE5NzI4OTk1fQ.rX37Gk1EGF2pG2tuCqvivAsphrX9N0RwZBTthRqscgQ',
     isLogin: true
   },
 
@@ -32,6 +33,7 @@ const store = new Vuex.Store({
   },
   actions: {
     getInfo(context) {
+      //console.log(context.state.wssocket.status)
       axios({
         method: "get",
         url: "http://localhost:8080/user/info/",
@@ -63,9 +65,14 @@ const store = new Vuex.Store({
         store.commit("setToken", resp.data.token)
         localStorage.setItem("jwt_token",context.state.token)
         store.dispatch("getInfo")
+        store.dispatch("setSocket",context.state.token)
       }).catch((error) => {
         console.log('error1')
       })
+    },
+    setSocket(context,token){
+      const wsurl="ws://localhost:8080/websocket/"+token
+      store.commit("updateSocket",wsurl)
     },
     removeToken(context){
       localStorage.removeItem("jwt_token")
@@ -73,7 +80,7 @@ const store = new Vuex.Store({
     }
   },
   modules: {
-
+    wssocket: WsSocket
   }
 })
 export default store

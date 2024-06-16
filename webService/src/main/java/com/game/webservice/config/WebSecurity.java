@@ -36,7 +36,10 @@ public class WebSecurity {
                                 authorizeHttpRequests
                                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                                         .requestMatchers("/user/hxh").permitAll()
-                                        .requestMatchers("/user/token","/user/info/", "/user/register/").permitAll()
+                                        .requestMatchers("/user/token",
+                                                "/user/info/",
+                                                "/user/register/",
+                                                "/websocket/**").permitAll()
                                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
