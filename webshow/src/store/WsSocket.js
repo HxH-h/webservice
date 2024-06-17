@@ -1,8 +1,9 @@
 export default{
     state: {
         status:"matching",
+        wsurl:"",
         socket:"",
-        opponent_name:" "
+        opponent_name:""
     },
     getters: {
         
@@ -11,8 +12,8 @@ export default{
         updateStatus(state,status){
             state.status=status
         },
-        updateSocket(state,socket){
-            state.socket=socket
+        updateUrl(state,wsurl){
+            state.wsurl=wsurl
         },
         updateName(state,name){
             state.opponent_name=name

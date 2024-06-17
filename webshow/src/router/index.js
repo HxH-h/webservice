@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
         if(jwt_token){
           store.commit("setToken",jwt_token)
           store.dispatch("getInfo")
-          store.dispatch("setSocket",jwt_token)
+          store.dispatch("setUrl",jwt_token)
         }else{
           alert('抱歉，您无权限查看！')
           next('/login')
