@@ -31,6 +31,9 @@ export class Chess extends Game_Obj{
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         ]
     }
+    InitChessBoard(chessAry){
+        this.chessAry=chessAry
+    }
     update(){
         this.render()
 
@@ -64,7 +67,12 @@ export class Chess extends Game_Obj{
         if(role<1||role>2){
             return
         }
-        this.chessAry[this.curY][this.curX]=role
+        //this.chessAry[this.curY][this.curX]=role
+        var pos={
+            x: this.curX,
+            y: this.curY
+        }
+        return pos
     }
     drawChess(x,y,color){
         this.ctx.beginPath();//开始绘制

@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.game.webservice.Controller.Utils.JwtUtil;
 import com.game.webservice.Dao.User;
 import com.game.webservice.Dao.UserMapper;
+import com.game.webservice.Service.ChessGame;
+import com.game.webservice.Service.Player;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
@@ -40,7 +42,7 @@ public class WebSocketController {
         this.user= userMapper.findById(id.toString());
         if (user !=null){
             wsuser.put(id,this);
-            userpool.add(this.user);
+
             System.out.println(user.getUsername()+" is connected");
         }else {
             this.session.close();
@@ -66,6 +68,8 @@ public class WebSocketController {
             StartMatching();
         } else if ("stop-matching".equals(event)) {
             StopMatching();
+        }else if("down".equals(event)){
+            System.out.println(data.getString("position"));
         }
 
     }
@@ -85,6 +89,7 @@ public class WebSocketController {
     }
     public void StartMatching(){
         System.out.println("start matching");
+        userpool.add(this.user);
         while (userpool.size()>=2){
             System.out.println("size>=2");
             Iterator<User> it=userpool.iterator();
@@ -92,14 +97,23 @@ public class WebSocketController {
             userpool.remove(a);
             userpool.remove(b);
             JSONObject respa=new JSONObject();
+
             respa.put("event","match_success");
             respa.put("oppont_name",b.getUsername());
+            respa.put("turn",0);
             wsuser.get(a.getId()).SendMes(respa.toJSONString());
 
             JSONObject respb=new JSONObject();
             respb.put("event","match_success");
             respb.put("oppont_name",a.getUsername());
+            respa.put("turn",1);
             wsuser.get(b.getId()).SendMes(respb.toJSONString());
+
+            //匹配成功后应该每一对组合对应一个game
+            ChessGame chessGame = new ChessGame(new Player(wsuser.get(a.getId())),new Player(wsuser.get(b.getId())));
+            chessGame.InitChess();
+            //循环起来就完成了
+            chessGame.Playing_chess(0);
         }
     }
     public void StopMatching(){

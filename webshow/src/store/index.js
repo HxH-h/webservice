@@ -5,7 +5,7 @@ import  WsSocket from './WsSocket.js'
 const store = new Vuex.Store({
   state: {
     id: '',
-    username: 'hxh',
+    username: '',
     password: ' ',
     token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3OWU5MjFkZjcxNmM0NzdkOGFhOTVmNDcxNjhlNjU2YSIsInN1YiI6IjIiLCJpc3MiOiJzZyIsImlhdCI6MTcxODUxOTM5NSwiZXhwIjoxNzE5NzI4OTk1fQ.rX37Gk1EGF2pG2tuCqvivAsphrX9N0RwZBTthRqscgQ',
     isLogin: false
@@ -33,7 +33,6 @@ const store = new Vuex.Store({
   },
   actions: {
     getInfo(context) {
-      //console.log(context.state.wssocket.status)
       axios({
         method: "get",
         url: "http://localhost:8080/user/info/",

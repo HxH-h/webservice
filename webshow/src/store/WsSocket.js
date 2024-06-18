@@ -3,7 +3,8 @@ export default{
         status:"matching",
         wsurl:"",
         socket:"",
-        opponent_name:""
+        opponent_name:"",
+        turn:" "
     },
     getters: {
         
@@ -17,6 +18,9 @@ export default{
         },
         updateName(state,name){
             state.opponent_name=name
+        },
+        updateTurn(state,turn){
+            state.turn=turn
         }
     },
     actions: {

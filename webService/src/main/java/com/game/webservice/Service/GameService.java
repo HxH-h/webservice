@@ -9,16 +9,20 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+//数据库存取棋局，进行增删查
+//留存对局记录
 @Service
 public class GameService {
     @Autowired
     UserMapper userMapper;
-    public void SaveChessHistory(Integer [][] chess){
+
+    public void SaveChessHistory(Integer id,Integer [][] chess){
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String s = dateTime.format(formatter).toString();
-        String hischess = ArraySerializationUtil.ArraySerialize(ArraySerializationUtil.chess);
-        userMapper.SaveChessHistory(1,s,hischess);
+        String hischess = ArraySerializationUtil.ArraySerialize(chess);
+        userMapper.SaveChessHistory(id,s,hischess);
     }
     public Integer [][] selectChess(Integer id){
         ChessHistory chessHistory = userMapper.selectChess(id);
