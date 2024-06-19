@@ -4,23 +4,25 @@ import com.alibaba.fastjson.JSONObject;
 import com.game.webservice.Controller.WebSocketController;
 
 public class Player {
-    WebSocketController webSocketController=null;
+   Integer id;
 
-    public WebSocketController getWebSocketController() {
-        return webSocketController;
+    public Player(Integer id) {
+        this.id = id;
     }
 
-    public void setWebSocketController(WebSocketController webSocketController) {
-        this.webSocketController = webSocketController;
+    public Integer getId() {
+        return id;
     }
 
-    public Player(WebSocketController webSocketController) {
-        this.webSocketController = webSocketController;
+    public void setId(Integer id) {
+        this.id = id;
     }
-    public void sendMes(String event,Object text){
+
+    public void sendMes(String event, Object text){
         JSONObject resp=new JSONObject();
         resp.put("event",event);
         resp.put(event,text);
+        WebSocketController webSocketController = WebSocketController.wsuser.get(this.id);
         webSocketController.SendMes(resp.toJSONString());
     }
 }

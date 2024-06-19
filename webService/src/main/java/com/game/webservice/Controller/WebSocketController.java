@@ -32,7 +32,7 @@ public class WebSocketController {
     public static CopyOnWriteArraySet<User> userpool=new CopyOnWriteArraySet<>();
     User user=null;
     Session session=null;
-
+    ChessGame chessGame=null;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) throws IOException {
@@ -61,7 +61,7 @@ public class WebSocketController {
     }
 
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) throws InterruptedException {
         JSONObject data = JSONObject.parseObject(message);
         String event = data.getString("event");
         if("start-matching".equals(event)){
@@ -69,7 +69,8 @@ public class WebSocketController {
         } else if ("stop-matching".equals(event)) {
             StopMatching();
         }else if("down".equals(event)){
-            System.out.println(data.getString("position"));
+            SetChess(data.getJSONObject("position").getString("x"),
+                    data.getJSONObject("position").getString("y"));
         }
 
     }
@@ -87,7 +88,12 @@ public class WebSocketController {
             }
         }
     }
-    public void StartMatching(){
+
+    public void setChessGame(ChessGame chessGame) {
+        this.chessGame = chessGame;
+    }
+
+    public void StartMatching() throws InterruptedException {
         System.out.println("start matching");
         userpool.add(this.user);
         while (userpool.size()>=2){
@@ -110,14 +116,23 @@ public class WebSocketController {
             wsuser.get(b.getId()).SendMes(respb.toJSONString());
 
             //匹配成功后应该每一对组合对应一个game
-            ChessGame chessGame = new ChessGame(new Player(wsuser.get(a.getId())),new Player(wsuser.get(b.getId())));
-            chessGame.InitChess();
-            //循环起来就完成了
-            chessGame.Playing_chess(0);
+            ChessGame chessTemp=new ChessGame(new Player(a.getId()),new Player(b.getId()));
+            wsuser.get(a.getId()).setChessGame(chessTemp);
+            wsuser.get(b.getId()).setChessGame(chessTemp);
+            chessTemp.InitChess();
+            Thread.sleep(150);
+            chessTemp.start();
         }
     }
     public void StopMatching(){
-        System.out.println("start match");
+        System.out.println("stop match");
+    }
+    public void SetChess(String x,String y){
+        if (this.chessGame.getPlayerA().getId().equals(user.getId())){
+            this.chessGame.Set_Chess(Integer.parseInt(x),Integer.parseInt(y),0);
+        }else if (this.chessGame.getPlayerB().getId().equals(user.getId())){
+            this.chessGame.Set_Chess(Integer.parseInt(x),Integer.parseInt(y),1);
+        }
     }
 
 }

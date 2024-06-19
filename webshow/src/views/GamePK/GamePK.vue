@@ -129,17 +129,18 @@ export default {
                     }, 150)
                 } else if (data.event === "InitChess") {
                     timer.value = setTimeout(() => {
-                        console.log(Chesses)
                         Chesses.InitChessBoard(data.InitChess)
                     }, 150)
                 } else if(data.event === "start_turn"){
                     if(data.start_turn==store.state.wssocket.turn){
                         document.getElementById("can").onclick=ClickHandle
-                        
+                        store.state.wssocket.turn="2"
                     }else{
                         document.getElementById("can").onclick=DoNothing
                         console.log("is not your turn")
                     }
+                }else if(data.event === "synchronization"){
+                    Chesses.InitChessBoard(data.synchronization)
                 }
             }
 
