@@ -13,12 +13,15 @@ export default{
         updateStatus(state,status){
             state.status=status
         },
+        
         updateUrl(state,wsurl){
             state.wsurl=wsurl
         },
+
         updateName(state,name){
             state.opponent_name=name
         },
+
         updateTurn(state,turn){
             state.turn=turn
         }

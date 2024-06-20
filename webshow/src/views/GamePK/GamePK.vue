@@ -44,13 +44,13 @@ export default {
         //获取棋子对象
         var Chesses = null;
         function ClickHandle(e) {
+            
             //下棋
             var pos=Chesses.setChess(1);
             store.state.wssocket.socket.send(JSON.stringify({
                 event: "down",
                 position: pos
             }))
-            //console.log(pos)
         }
         function DoNothing(){
 
@@ -119,6 +119,7 @@ export default {
             }
             socket.onmessage = msg => {
                 const data = JSON.parse(msg.data)
+               
                 //判断消息类型
                 if (data.event === "match_success") {
                     store.state.wssocket.opponent_name = data.oppont_name
@@ -134,13 +135,18 @@ export default {
                 } else if(data.event === "start_turn"){
                     if(data.start_turn==store.state.wssocket.turn){
                         document.getElementById("can").onclick=ClickHandle
-                        store.state.wssocket.turn="2"
                     }else{
                         document.getElementById("can").onclick=DoNothing
-                        console.log("is not your turn")
+                       
                     }
                 }else if(data.event === "synchronization"){
                     Chesses.InitChessBoard(data.synchronization)
+                }else if(data.event === "end"){
+                    
+                    store.state.wssocket.opponent_name = ""
+                    store.state.wssocket.status = "matching"
+                    button.value = "开始匹配"
+                    store.state.wssocket.turn=null
                 }
             }
 

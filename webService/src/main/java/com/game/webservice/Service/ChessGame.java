@@ -30,6 +30,9 @@ public class ChessGame extends Thread{
     Player playerB=null;
     private Integer turn=0;
 
+    public Integer getTurn() {
+        return turn;
+    }
 
     public Player getPlayerA() {
         return playerA;
@@ -56,41 +59,36 @@ public class ChessGame extends Thread{
         playerA.sendMes("InitChess",this.chess);
         playerB.sendMes("InitChess",this.chess);
     }
-    public void Playing_chess(Integer i){
-            if ((turn=i%2)==0){
-                playerA.sendMes("start_turn",turn);
 
-            }else{
-                playerB.sendMes("start_turn",turn);
-            }
+    public void Set_Chess(int x,int y){
+        this.chess[y][x]=turn%2+1;
+        turn++;
+        if (turn>=10){
+            this.Broadcast("end",null);
+            return ;
+        }
+        System.out.println(turn);
+        this.Broadcast("synchronization",this.chess);
+        this.Broadcast("start_turn",turn%2);
     }
-    public void Set_Chess(int x,int y,Integer role){
-        this.chess[y][x]=role+1;
-        this.Broadcast();
-        turn=(role+1)%2;
-        System.out.println("role: "+role);
-    }
-    public void Broadcast(){
-        playerA.sendMes("synchronization",this.chess);
-        playerB.sendMes("synchronization",this.chess);
+    public void Broadcast(String event,Object obj){
+        playerA.sendMes(event,obj);
+        playerB.sendMes(event,obj);
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 1000;) {
-            if (turn!=2){
-                System.out.println(turn);
-            }
-                if (turn==0){
-                    playerA.sendMes("start_turn",turn);
-                    turn=2;
-                    i++;
-                }else if (turn==1){
-                    playerB.sendMes("start_turn",turn);
-                    turn=2;
-                    i++;
-                }
-        }
+        this.Broadcast("start_turn",0);
+        while (turn<10){
 
+        }
+        this.Broadcast("end",null);
+        System.out.println("yifasong");
+        System.out.println("对局结束");
+    }
+    @Override
+    protected void finalize( ) throws Throwable {
+        super.finalize();
+        System.out.println("对象已销毁");
     }
 }

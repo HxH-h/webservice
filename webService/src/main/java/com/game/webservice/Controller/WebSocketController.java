@@ -97,7 +97,6 @@ public class WebSocketController {
         System.out.println("start matching");
         userpool.add(this.user);
         while (userpool.size()>=2){
-            System.out.println("size>=2");
             Iterator<User> it=userpool.iterator();
             User a=it.next(),b= it.next();
             userpool.remove(a);
@@ -112,11 +111,12 @@ public class WebSocketController {
             JSONObject respb=new JSONObject();
             respb.put("event","match_success");
             respb.put("oppont_name",a.getUsername());
-            respa.put("turn",1);
+            respb.put("turn",1);
             wsuser.get(b.getId()).SendMes(respb.toJSONString());
 
             //匹配成功后应该每一对组合对应一个game
             ChessGame chessTemp=new ChessGame(new Player(a.getId()),new Player(b.getId()));
+            System.out.println(chessTemp.getTurn());
             wsuser.get(a.getId()).setChessGame(chessTemp);
             wsuser.get(b.getId()).setChessGame(chessTemp);
             chessTemp.InitChess();
@@ -129,9 +129,9 @@ public class WebSocketController {
     }
     public void SetChess(String x,String y){
         if (this.chessGame.getPlayerA().getId().equals(user.getId())){
-            this.chessGame.Set_Chess(Integer.parseInt(x),Integer.parseInt(y),0);
+            this.chessGame.Set_Chess(Integer.parseInt(x),Integer.parseInt(y));
         }else if (this.chessGame.getPlayerB().getId().equals(user.getId())){
-            this.chessGame.Set_Chess(Integer.parseInt(x),Integer.parseInt(y),1);
+            this.chessGame.Set_Chess(Integer.parseInt(x),Integer.parseInt(y));
         }
     }
 
